@@ -123,23 +123,37 @@ bool LinkedList<T>::removeBack()
 	{
 		return( isRemoved );
 	}
+	else if( m_size == 1 )
+	{
+		delete m_front;
+		m_front = nullptr;
+		m_size = 0;
+		isRemoved = true;
+		return( isRemoved );
+	}
+	else if ( m_size == 2 )
+	{
+		lastNode = m_front->getNext();
+		delete lastNode;
+		lastNode = nullptr;
+		m_front->setNext(nullptr);
+		m_size = 1;
+		isRemoved = true;
+		return( isRemoved );
+	}
 	else
 	{
 		secondintoLast = m_front;
-
-		for( int i = 0; i<( m_size - 1 ); i++ )
+		for( int i = 0; i<( m_size - 2 ); i++ )
 		{
 			secondintoLast = secondintoLast->getNext();
 		}
-
 		lastNode = secondintoLast->getNext();
-
 		delete lastNode;
-
 		lastNode = nullptr;
-
+		secondintoLast->setNext(nullptr);
+		m_size = m_size - 1;
 		isRemoved = true;
-
 		return( isRemoved );
 	}
 }
